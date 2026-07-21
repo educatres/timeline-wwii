@@ -16,18 +16,19 @@ let currentYear = YEAR_CENTER;
 let dragging = false;
 let startX = 0;
 let startYear = YEAR_CENTER;
-let detailTrigger = null;
 
 const typeNames = {
   event: '重大事件',
-  leader: '領導與政權',
-  economy: '政經議題'
+  leader: '政治領導人',
+  economy: '政經議題',
+  person: '重要人物'
 };
 
 const typeColors = {
   event: 'var(--event)',
   leader: 'var(--leader)',
-  economy: 'var(--economy)'
+  economy: 'var(--economy)',
+  person: 'var(--person)'
 };
 
 function era(year) {
@@ -45,13 +46,8 @@ function build() {
   Object.entries(REGIONS).forEach(([key, region]) => {
     const lane = document.createElement('section');
     lane.className = `lane ${key}`;
-    lane.innerHTML = `
-      <div class="lane-label">
-        <strong>${region.icon}｜${region.name}</strong>
-        <small>${region.subtitle}</small>
-      </div>
-      <div class="axis"></div>
-    `;
+    lane.setAttribute('aria-label', region.name);
+    lane.innerHTML = '<div class="axis"></div>';
 
     for (let year = YEAR_START; year <= YEAR_END; year += 1) {
       const mark = document.createElement('div');
@@ -88,12 +84,11 @@ function build() {
       card.innerHTML = `
         <span class="date">${event.date} · ${typeNames[event.type]}</span>
         <b>${event.title}</b>
-        <span class="card-more">詳情＋圖像 →</span>
       `;
       card.addEventListener('pointerdown', (eventPointer) => eventPointer.stopPropagation());
       card.addEventListener('click', (eventClick) => {
         eventClick.stopPropagation();
-        openDetails(event, card);
+        openDetails(event);
       });
       lane.append(card);
     });
@@ -144,7 +139,7 @@ function renderSnapshot() {
       <div class="region">${REGIONS[key].icon} ${REGIONS[key].name}${exact.length ? '' : ` · 鄰近 ${items[0].year}`}</div>
       ${items.slice(0, 2).map((event) => `<h3>${event.title}</h3><p>${event.summary}</p>`).join('')}
     `;
-    const open = () => openDetails(items[0], card);
+    const open = () => openDetails(items[0]);
     card.addEventListener('click', open);
     card.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -157,7 +152,6 @@ function renderSnapshot() {
 }
 
 const detailPanel = document.querySelector('#detailPanel');
-const detailScrim = document.querySelector('#detailScrim');
 const detailGallery = document.querySelector('#detailGallery');
 const detailSources = document.querySelector('#detailSources');
 
@@ -177,8 +171,7 @@ function sourceName(url) {
   }
 }
 
-function openDetails(event, trigger) {
-  detailTrigger = trigger;
+function openDetails(event) {
   document.querySelector('#detailRegion').textContent = `${REGIONS[event.region].icon}｜${REGIONS[event.region].name}`;
   document.querySelector('#detailType').textContent = typeNames[event.type];
   document.querySelector('#detailDate').textContent = event.date;
@@ -253,24 +246,21 @@ function openDetails(event, trigger) {
   });
 
   detailPanel.querySelector('.detail-scroll').scrollTop = 0;
-  detailPanel.setAttribute('aria-hidden', 'false');
-  detailScrim.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('detail-open');
 }
 
-function closeDetails() {
-  detailPanel.setAttribute('aria-hidden', 'true');
-  detailScrim.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('detail-open');
-  document.querySelectorAll('.event-card.selected').forEach((card) => card.classList.remove('selected'));
-  if (detailTrigger && document.contains(detailTrigger)) detailTrigger.focus();
+const typeFilters = [...document.querySelectorAll('[data-type-filter]')];
+
+function applyTypeFilters() {
+  const visibleTypes = new Set(
+    typeFilters.filter((filter) => filter.checked).map((filter) => filter.dataset.typeFilter)
+  );
+  document.querySelectorAll('.event-card').forEach((card) => {
+    const event = EVENTS.find((item) => item.id === card.dataset.id);
+    card.hidden = !visibleTypes.has(event.type);
+  });
 }
 
-document.querySelector('#closeDetail').addEventListener('click', closeDetails);
-detailScrim.addEventListener('click', closeDetails);
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && document.body.classList.contains('detail-open')) closeDetails();
-});
+typeFilters.forEach((filter) => filter.addEventListener('change', applyTypeFilters));
 
 slider.addEventListener('input', (event) => setYear(Number(event.target.value)));
 document.querySelector('#prevYear').addEventListener('click', () => setYear(currentYear - 1));
@@ -316,3 +306,6 @@ help.addEventListener('click', (event) => {
 
 build();
 setYear(YEAR_CENTER);
+applyTypeFilters();
+const initialEvent = EVENTS.find((event) => event.id === 'a1945') || EVENTS[0];
+openDetails(initialEvent);
