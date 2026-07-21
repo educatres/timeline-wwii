@@ -90,3 +90,38 @@ body.detail-open{overflow:hidden}
   .detail-gallery{grid-template-columns:1fr}
   .detail-gallery figure>a{aspect-ratio:16/10}
 }
+
+/* Flat, color-coded classroom timeline */
+:root{
+  --asia-lane:#f3d889;
+  --europe-lane:#a9ddbd;
+  --americas-lane:#efb4c2;
+}
+.control-panel{position:sticky;top:12px;z-index:70;background:rgba(16,24,42,.94)}
+.stage{perspective:none}
+.world{transform:none;transform-style:flat;transition:none}
+.lane{transform:translateX(-50%);transform-style:flat;border-radius:28px;border-width:1px;border-style:solid}
+.lane.asia{background:linear-gradient(90deg,rgba(243,216,137,.04),rgba(243,216,137,.18) 12%,rgba(243,216,137,.25) 50%,rgba(243,216,137,.18) 88%,rgba(243,216,137,.04));border-color:rgba(243,216,137,.58)}
+.lane.europe{background:linear-gradient(90deg,rgba(169,221,189,.04),rgba(169,221,189,.18) 12%,rgba(169,221,189,.25) 50%,rgba(169,221,189,.18) 88%,rgba(169,221,189,.04));border-color:rgba(169,221,189,.58)}
+.lane.americas{background:linear-gradient(90deg,rgba(239,180,194,.04),rgba(239,180,194,.18) 12%,rgba(239,180,194,.25) 50%,rgba(239,180,194,.18) 88%,rgba(239,180,194,.04));border-color:rgba(239,180,194,.58)}
+.lane.asia .lane-label strong{color:var(--asia-lane)}
+.lane.europe .lane-label strong{color:var(--europe-lane)}
+.lane.americas .lane-label strong{color:var(--americas-lane)}
+.lane.asia .axis{background:linear-gradient(90deg,transparent,var(--asia-lane),transparent)}
+.lane.europe .axis{background:linear-gradient(90deg,transparent,var(--europe-lane),transparent)}
+.lane.americas .axis{background:linear-gradient(90deg,transparent,var(--americas-lane),transparent)}
+.lane-label{transform:translateX(-50%)}
+.year-mark span{transform:none;color:#aab5c8}
+.event-card,.event-card.near,.event-card:hover,.event-card:active{transform:translateX(-50%);transition:none}
+.event-card.near{border-color:rgba(255,255,255,.62);z-index:5}
+.event-card:hover{outline:2px solid rgba(255,255,255,.72);outline-offset:2px;box-shadow:0 14px 28px #0008;z-index:7}
+.event-card:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.event-card.selected{outline:3px solid #fff;outline-offset:3px}
+
+@media(max-width:800px){
+  .world{transform:none}
+  .lane-label{transform:translateX(-50%)}
+  .year-mark span{transform:none}
+  .event-card,.event-card.near,.event-card:hover,.event-card:active{transform:translateX(-50%)}
+  .control-panel{top:8px}
+}

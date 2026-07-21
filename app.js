@@ -278,8 +278,9 @@ document.querySelector('#nextYear').addEventListener('click', () => setYear(curr
 document.querySelector('#resetBtn').addEventListener('click', () => setYear(YEAR_CENTER));
 
 stage.addEventListener('wheel', (event) => {
+  if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
   event.preventDefault();
-  setYear(currentYear + (event.deltaY > 0 ? 1 : -1));
+  setYear(currentYear + (event.deltaX > 0 ? 1 : -1));
 }, { passive: false });
 
 stage.addEventListener('pointerdown', (event) => {
