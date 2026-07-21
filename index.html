@@ -54,37 +54,57 @@
     </section>
   </main>
 
-  <dialog id="cardDialog" class="card-dialog">
-    <button id="closeDialog" class="dialog-close" aria-label="關閉">×</button>
-    <div id="flipCard" class="flip-card" tabindex="0" role="button" aria-label="點擊翻面">
-      <article class="flip-inner">
-        <section class="flip-face flip-front">
-          <p id="modalRegion" class="modal-region"></p>
-          <div id="modalType" class="modal-type"></div>
-          <p id="modalDate" class="modal-date"></p>
-          <h2 id="modalTitle"></h2>
-          <p id="modalSummary"></p>
-          <div class="flip-hint">點擊卡片翻面看人物與政經脈絡 ↻</div>
-        </section>
-        <section class="flip-face flip-back">
-          <p class="eyebrow">CONTEXT</p>
-          <h3>人物與政經脈絡</h3>
-          <div id="modalLeaders" class="leader-chips"></div>
-          <p id="modalContext"></p>
-          <p id="modalImpact" class="impact"></p>
-          <a id="modalSource" target="_blank" rel="noopener">查閱資料來源 ↗</a>
-          <div class="flip-hint">再次點擊回到事件摘要 ↻</div>
-        </section>
-      </article>
+  <div id="detailScrim" class="detail-scrim" aria-hidden="true"></div>
+  <aside id="detailPanel" class="detail-panel" aria-hidden="true" aria-label="事件詳細資料">
+    <header class="detail-header">
+      <div>
+        <p id="detailRegion" class="modal-region"></p>
+        <div class="detail-meta">
+          <span id="detailType" class="modal-type"></span>
+          <span id="detailDate" class="modal-date"></span>
+        </div>
+      </div>
+      <button id="closeDetail" class="detail-close" aria-label="關閉事件詳情">×</button>
+    </header>
+    <div class="detail-scroll">
+      <h2 id="detailTitle"></h2>
+      <p id="detailSummary" class="detail-summary"></p>
+
+      <section class="detail-section">
+        <p class="eyebrow">DETAILED STORY</p>
+        <h3>事件詳述</h3>
+        <p id="detailText"></p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">IMAGE ARCHIVE</p>
+        <h3>公開圖像</h3>
+        <div id="detailGallery" class="detail-gallery"></div>
+      </section>
+
+      <section class="detail-section context-block">
+        <p class="eyebrow">CONTEXT</p>
+        <h3>人物與政經脈絡</h3>
+        <div id="detailLeaders" class="leader-chips"></div>
+        <p id="detailContext"></p>
+        <p id="detailImpact" class="impact"></p>
+      </section>
+
+      <section class="detail-section source-block">
+        <p class="eyebrow">SOURCES &amp; CREDITS</p>
+        <h3>資料與圖像來源</h3>
+        <ul id="detailSources"></ul>
+        <p class="license-note">圖像取自 Wikimedia Commons；各圖作者、原始機構與授權條款以連結的檔案頁為準。</p>
+      </section>
     </div>
-  </dialog>
+  </aside>
 
   <dialog id="helpDialog" class="help-dialog">
     <button id="closeHelp" class="dialog-close" aria-label="關閉">×</button>
     <h2>怎麼操作？</h2>
     <ol>
       <li>拖曳三條時間軸、使用滑鼠滾輪，或按左右方向鍵切換年份。</li>
-      <li>點擊軌道上的卡片，打開事件；再點卡片可翻到人物與政經脈絡。</li>
+      <li>點擊軌道上的卡片，右側會展開事件詳述、公開圖像與引用來源。</li>
       <li>下方「年度快照」會同步整理同一年三洲的主要焦點。</li>
     </ol>
   </dialog>
@@ -93,6 +113,7 @@
     <p>教學示範版｜時間範圍採 1935–1955，內容可於 <code>data.js</code> 自由增修。</p>
   </footer>
   <script src="data.js"></script>
+  <script src="details.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
