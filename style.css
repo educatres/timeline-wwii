@@ -190,3 +190,17 @@ body.detail-open{overflow:auto}
   .event-card.slot-0{top:6px}
   .event-card.slot-1{bottom:6px}
 }
+
+/* 1915–1975 range and video archive */
+.control-panel{position:relative;top:auto}
+.lane{width:4600px}
+.detail-videos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.video-card{min-width:0;border:1px solid var(--line);border-radius:14px;background:#111a2d;overflow:hidden}
+.video-card iframe{display:block;width:100%;aspect-ratio:16/9;border:0;background:#050812}
+.video-card>a{display:block;padding:11px 12px 5px;color:#91e6d2;font-size:.78rem;font-weight:800;line-height:1.45;text-decoration:none}
+.video-card>p{padding:0 12px 12px;margin:0;color:#8f9db3!important;font-size:.69rem;line-height:1.45!important}
+.video-note{margin-top:14px!important;color:#8f9db3!important;font-size:.72rem;line-height:1.55!important}
+
+@media(max-width:800px){
+  .detail-videos{grid-template-columns:1fr}
+}

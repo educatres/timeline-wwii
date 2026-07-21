@@ -6,10 +6,10 @@ const snapshotYear = document.querySelector('#snapshotYear');
 const snapshotCards = document.querySelector('#snapshotCards');
 const question = document.querySelector('#thinkingQuestion');
 
-const YEAR_START = 1935;
-const YEAR_END = 1955;
+const YEAR_START = 1915;
+const YEAR_END = 1975;
 const YEAR_CENTER = 1945;
-const YEAR_SPACING = 118;
+const YEAR_SPACING = 74;
 const LANE_EDGE = 80;
 
 let currentYear = YEAR_CENTER;
@@ -32,11 +32,15 @@ const typeColors = {
 };
 
 function era(year) {
+  if (year < 1919) return '第一次世界大戰與革命';
+  if (year < 1929) return '戰後重建、民族運動與新秩序';
   if (year < 1939) return '戰前危機累積';
   if (year < 1943) return '全面戰爭擴張';
   if (year < 1946) return '戰局逆轉與戰爭終結';
   if (year < 1950) return '重建、分裂與冷戰成形';
-  return '冷戰全球化';
+  if (year < 1956) return '冷戰全球化與去殖民化';
+  if (year < 1965) return '核危機、圍牆與新興國家';
+  return '社會運動、戰爭終結與緩和';
 }
 
 function build() {
@@ -153,6 +157,7 @@ function renderSnapshot() {
 
 const detailPanel = document.querySelector('#detailPanel');
 const detailGallery = document.querySelector('#detailGallery');
+const detailVideos = document.querySelector('#detailVideos');
 const detailSources = document.querySelector('#detailSources');
 
 function commonsImageUrl(file) {
@@ -218,6 +223,30 @@ function openDetails(event) {
     detailGallery.append(figure);
   });
 
+  detailVideos.innerHTML = '';
+  (event.videos || []).forEach((video) => {
+    const article = document.createElement('article');
+    const frame = document.createElement('iframe');
+    const title = document.createElement('a');
+    const source = document.createElement('p');
+    const watchUrl = `https://www.youtube.com/watch?v=${video.id}`;
+
+    article.className = 'video-card';
+    frame.src = `https://www.youtube-nocookie.com/embed/${video.id}`;
+    frame.title = video.title;
+    frame.loading = 'lazy';
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    frame.allowFullscreen = true;
+    title.href = watchUrl;
+    title.target = '_blank';
+    title.rel = 'noopener';
+    title.textContent = `${video.title} ↗`;
+    source.textContent = `出處：${video.channel}｜YouTube`;
+    article.append(frame, title, source);
+    detailVideos.append(article);
+  });
+
   detailSources.innerHTML = '';
   const sources = [
     {
@@ -227,6 +256,10 @@ function openDetails(event) {
     ...(event.images || []).map(([file, caption], index) => ({
       label: `圖像 ${index + 1}：${caption}`,
       url: commonsSourceUrl(file)
+    })),
+    ...(event.videos || []).map((video, index) => ({
+      label: `影片 ${index + 1}：${video.title}（${video.channel}）`,
+      url: `https://www.youtube.com/watch?v=${video.id}`
     }))
   ];
 

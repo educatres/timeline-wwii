@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="1935–1955 亞洲、歐洲、美洲三軌水平互動時間軸" />
+  <meta name="description" content="1915–1975 亞洲、歐洲、美洲三軌水平互動時間軸" />
   <title>世界同一刻｜二戰前後三洲互動時間軸</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
     <div>
-      <p class="eyebrow">1935—1955 · 同步觀看世界</p>
+      <p class="eyebrow">1915—1975 · 同步觀看世界</p>
       <h1>世界同一刻</h1>
       <p class="subtitle">拖曳時間，對照亞洲、歐洲、美洲在同一年發生的政治、戰爭與政經轉折。</p>
     </div>
@@ -25,8 +25,8 @@
       <button id="prevYear" aria-label="前一年">←</button>
       <div class="year-control">
         <div class="year-readout"><span id="yearLabel">1945</span><small id="eraLabel">戰爭終結與新秩序</small></div>
-        <input id="yearSlider" type="range" min="1935" max="1955" value="1945" step="1" aria-label="選擇年份" />
-        <div class="ticks"><span>1935</span><span>1940</span><span>1945</span><span>1950</span><span>1955</span></div>
+        <input id="yearSlider" type="range" min="1915" max="1975" value="1945" step="1" aria-label="選擇年份" />
+        <div class="ticks"><span>1915</span><span>1930</span><span>1945</span><span>1960</span><span>1975</span></div>
       </div>
       <button id="nextYear" aria-label="後一年">→</button>
     </section>
@@ -81,6 +81,13 @@
         <div id="detailGallery" class="detail-gallery"></div>
       </section>
 
+      <section class="detail-section">
+        <p class="eyebrow">VIDEO GUIDE</p>
+        <h3>事件說明影片</h3>
+        <div id="detailVideos" class="detail-videos"></div>
+        <p class="video-note">影片由 YouTube 提供；若嵌入播放受限，可點擊影片標題前往 YouTube 觀看。</p>
+      </section>
+
       <section class="detail-section context-block">
         <p class="eyebrow">CONTEXT</p>
         <h3>人物與政經脈絡</h3>
@@ -110,10 +117,11 @@
   </dialog>
 
   <footer>
-    <p>教學示範版｜時間範圍採 1935–1955，內容可於 <code>data.js</code> 自由增修。</p>
+    <p>教學示範版｜時間範圍採 1915–1975，內容可於 <code>data.js</code>、<code>details.js</code> 與 <code>videos.js</code> 自由增修。</p>
   </footer>
   <script src="data.js"></script>
   <script src="details.js"></script>
+  <script src="videos.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
