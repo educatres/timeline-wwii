@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="1935–1955 亞洲、歐洲、美洲三軌 3D 互動時間軸" />
+  <title>世界同一刻｜二戰前後三洲 3D 時間軸</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">1935—1955 · 同步觀看世界</p>
+      <h1>世界同一刻</h1>
+      <p class="subtitle">拖曳時間，對照亞洲、歐洲、美洲在同一年發生的政治、戰爭與政經轉折。</p>
+    </div>
+    <div class="header-actions">
+      <button id="helpBtn" class="ghost">操作說明</button>
+      <button id="resetBtn">回到 1945</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="control-panel" aria-label="時間軸控制">
+      <button id="prevYear" aria-label="前一年">←</button>
+      <div class="year-control">
+        <div class="year-readout"><span id="yearLabel">1945</span><small id="eraLabel">戰爭終結與新秩序</small></div>
+        <input id="yearSlider" type="range" min="1935" max="1955" value="1945" step="1" aria-label="選擇年份" />
+        <div class="ticks"><span>1935</span><span>1940</span><span>1945</span><span>1950</span><span>1955</span></div>
+      </div>
+      <button id="nextYear" aria-label="後一年">→</button>
+    </section>
+
+    <section class="legend">
+      <span><i class="dot event"></i>重大事件</span>
+      <span><i class="dot leader"></i>政治領導人</span>
+      <span><i class="dot economy"></i>政經議題</span>
+      <span class="hint">滑鼠拖曳／滾輪／鍵盤方向鍵皆可移動年份</span>
+    </section>
+
+    <section id="stage" class="stage" tabindex="0" aria-label="三洲 3D 時間軸"></section>
+
+    <section class="compare-panel">
+      <div>
+        <p class="eyebrow">YEAR SNAPSHOT</p>
+        <h2><span id="snapshotYear">1945</span> 年，三洲正在發生什麼？</h2>
+      </div>
+      <div id="snapshotCards" class="snapshot-grid"></div>
+    </section>
+
+    <section class="question-strip">
+      <strong>課堂提問：</strong>
+      <span id="thinkingQuestion">二戰結束是否也代表全球衝突結束？請比較三洲在 1945 年之後面臨的新問題。</span>
+    </section>
+  </main>
+
+  <dialog id="cardDialog" class="card-dialog">
+    <button id="closeDialog" class="dialog-close" aria-label="關閉">×</button>
+    <div id="flipCard" class="flip-card" tabindex="0" role="button" aria-label="點擊翻面">
+      <article class="flip-inner">
+        <section class="flip-face flip-front">
+          <p id="modalRegion" class="modal-region"></p>
+          <div id="modalType" class="modal-type"></div>
+          <p id="modalDate" class="modal-date"></p>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSummary"></p>
+          <div class="flip-hint">點擊卡片翻面看人物與政經脈絡 ↻</div>
+        </section>
+        <section class="flip-face flip-back">
+          <p class="eyebrow">CONTEXT</p>
+          <h3>人物與政經脈絡</h3>
+          <div id="modalLeaders" class="leader-chips"></div>
+          <p id="modalContext"></p>
+          <p id="modalImpact" class="impact"></p>
+          <a id="modalSource" target="_blank" rel="noopener">查閱資料來源 ↗</a>
+          <div class="flip-hint">再次點擊回到事件摘要 ↻</div>
+        </section>
+      </article>
+    </div>
+  </dialog>
+
+  <dialog id="helpDialog" class="help-dialog">
+    <button id="closeHelp" class="dialog-close" aria-label="關閉">×</button>
+    <h2>怎麼操作？</h2>
+    <ol>
+      <li>拖曳三條時間軸、使用滑鼠滾輪，或按左右方向鍵切換年份。</li>
+      <li>點擊軌道上的卡片，打開事件；再點卡片可翻到人物與政經脈絡。</li>
+      <li>下方「年度快照」會同步整理同一年三洲的主要焦點。</li>
+    </ol>
+  </dialog>
+
+  <footer>
+    <p>教學示範版｜時間範圍採 1935–1955，內容可於 <code>data.js</code> 自由增修。</p>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
